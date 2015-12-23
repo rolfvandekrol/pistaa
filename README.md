@@ -70,7 +70,7 @@ needs.
 ## Inspiration
 
 I'm aware of one other project that tries to solve this problem, but in a
-completely different way. [Deface](https://github.com/spree/deface is tool that
+completely different way. [Deface](https://github.com/spree/deface) is tool that
 was used in older versions of [Spree](https://spreecommerce.com/) and also 
 provides a way to alter templates from engines. It parses ERB templates to an
 XML structure using Nokogiri, exposes a DSL to manipulate the Nokogiri document
