@@ -4,11 +4,13 @@ module PistaaHelper
   # hidden. It repeatedly calls `render_pistaa_slot_item`, so the rendered
   # templates will be registered as hidden.
   def render_pistaa_slot(slot)
-    pistaa_slot_items(slot).map do |item|
-      next if pistaa_slot_item_hidden?(slot, item)
+    capture do
+      pistaa_slot_items(slot).map do |item|
+        next if pistaa_slot_item_hidden?(slot, item)
 
-      render_pistaa_slot_item(slot, item)
-    end.join("\n").html_safe
+        concat(render_pistaa_slot_item(slot, item))
+      end
+    end
   end
 
   # Render a specific template from a slot (regardless of it was hidden), and
