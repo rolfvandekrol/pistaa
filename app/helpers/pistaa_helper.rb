@@ -3,12 +3,12 @@ module PistaaHelper
   # Render all templates in the slot, but skip the items that are registered as
   # hidden. It repeatedly calls `render_pistaa_slot_item`, so the rendered
   # templates will be registered as hidden.
-  def render_pistaa_slot(slot)
+  def render_pistaa_slot(slot, *args)
     capture do
-      pistaa_slot_items(slot).map do |item|
+      pistaa_slot_items(slot).each do |item|
         next if pistaa_slot_item_hidden?(slot, item)
 
-        concat(render_pistaa_slot_item(slot, item))
+        concat(render_pistaa_slot_item(slot, item, *args))
       end
     end
   end
@@ -16,9 +16,13 @@ module PistaaHelper
   # Render a specific template from a slot (regardless of it was hidden), and
   # register it as hidden, so it won't be rendered if `render_pistaa_slot` is 
   # called. 
-  def render_pistaa_slot_item(slot, item)
+  def render_pistaa_slot_item(slot, item, *args)
+    options = args.extract_options!
+    
     hide_pistaa_slot_item(slot, item)
-    render partial: Pistaa[slot][item]
+
+    options[:partial] = Pistaa[slot][item]
+    render options
   end
 
   # List all the keys of the items in the slot.
